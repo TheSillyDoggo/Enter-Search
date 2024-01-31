@@ -1,6 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 #include <Geode/modify/LevelSearchLayer.hpp>
+#include <Geode/modify/ShareCommentLayer.hpp>
 #include <Geode/modify/FLAlertLayer.hpp>
 
 using namespace geode::prelude;
@@ -31,6 +32,23 @@ class $modify (LevelSearchLayer)
 	}
 };
 
+#ifndef GEODE_IS_MACOS
+
+class $modify (ShareCommentLayer)
+{	
+	bool init(gd::string p0, int p1, CommentType p2, int p3, gd::string p4)
+	{
+		if (!ShareCommentLayer::init(p0, p1, p2, p3, p4))
+			return false;
+
+		this->setID("ShareCommentLayer"); // node id's doesn't do this
+
+		return true;
+	}
+};
+
+#endif
+
 class $modify (CCKeyboardDispatcher)
 {
 	bool dispatchKeyboardMSG(cocos2d::enumKeyCodes key, bool down, bool idk)
@@ -45,9 +63,22 @@ class $modify (CCKeyboardDispatcher)
 				
 				return true;
 			}
+			if (CCDirector::get()->getRunningScene()->getChildByID("ShareCommentLayer"))
+			{
+				log::info("send comment");
+
+				#ifndef GEODE_IS_MACOS
+				as<ShareCommentLayer*>(CCDirector::get()->getRunningScene()->getChildByID("ShareCommentLayer"))->onShare(nullptr);				
+				#endif
+				return true;
+			}
 			else if (CCDirector::get()->getRunningScene()->getChildByID("FLAlertLayer"))
 			{
 				as<FLAlertLayer*>(CCDirector::get()->getRunningScene()->getChildByID("FLAlertLayer"))->onBtn2(nullptr);
+			}
+			else
+			{
+				return CCKeyboardDispatcher::dispatchKeyboardMSG(key, down, idk);	
 			}
 		}
 		else
