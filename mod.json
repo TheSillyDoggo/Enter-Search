@@ -8,5 +8,6 @@
 	"id": "thesillydoggo.entersearch",
 	"name": "Enter Search",
 	"developer": "TheSillyDoggo",
-	"description": "Allows you to press enter to search in the search layer"
+	"description": "Allows you to press enter to search in the search layer",
+	"repository": "https://github.com/TheSillyDoggo/Enter-Search"
 }
