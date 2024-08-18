@@ -1,9 +1,8 @@
 {
-	"geode": "2.0.0",
-	"version": "v1.6.9",
+	"geode": "3.2.0",
+	"version": "v1.7.0",
 	"gd": {
-		"win": "2.204",
-		"mac": "2.200"
+		"win": "2.206"
 	},
 	"id": "thesillydoggo.entersearch",
 	"name": "Enter Search",
